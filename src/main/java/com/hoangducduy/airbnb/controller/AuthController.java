@@ -65,10 +65,10 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Validated @RequestBody SignupRequest signupRequest) {
 
-//        if (signupRequest.getUsername().contains("admin") || signupRequest.getUsername().contains("manager")
-//                || signupRequest.getUsername().contains("administrator")) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Invalid Username!"));
-//        }
+        if (signupRequest.getUsername().contains("admin") || signupRequest.getUsername().contains("manager")
+                || signupRequest.getUsername().contains("administrator")) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Invalid Username!"));
+        }
 
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
             return ResponseEntity.badRequest().body(new MessageResponse("Username is already taken!"));
@@ -78,9 +78,9 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Email is already taken!"));
         }
 
-//        if (userRepository.existsByPhone(signupRequest.getPhone())) {
-//            return ResponseEntity.badRequest().body(new MessageResponse("Phone Number is already taken!"));
-//        }
+        if (userRepository.existsByPhone(signupRequest.getPhone())) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Phone Number is already taken!"));
+        }
 
         // Creating user's account
         User user = new User(signupRequest.getUsername(), signupRequest.getFullName(), signupRequest.getPhone(),
